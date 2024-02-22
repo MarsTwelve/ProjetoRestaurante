@@ -8,8 +8,6 @@ restaurant_pasta_masters = Restaurant(2000, "Pasta Masters", "Italy")
 restaurant_pasta_masters.receive_rating("Joel", 1)
 restaurant_pasta_masters.receive_rating("Daniel", 1)
 
-restaurant_pasteis_junin = Restaurant(900, "Pasteis Junin", "Brazil")
-
 
 def print_app_name():
     print("""
