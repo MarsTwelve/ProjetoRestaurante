@@ -1,6 +1,4 @@
-
 class Restaurant:
-    restaurants = []
 
     def __init__(self, code, name, country):
         self.code = code
@@ -8,10 +6,9 @@ class Restaurant:
         self.country = country
         self._status = False
         self._ratings = []
-        self.restaurants.append(self)
 
     def __str__(self):
-        return f"{self.code} {self.name} {self.country} {self._status}"
+        return f"{self.code} {self.name} {self.country} {self.status}"
 
     @property
     def status(self):
@@ -26,32 +23,13 @@ class Restaurant:
         average = round(rating_sum / ratings, 1)
         return average
 
-    @classmethod
-    def list_restaurants(cls):
-        for restaurant in cls.restaurants:
-            print(f"Restaurant Code: {restaurant.code}\n"
-                  f"Restaurant Name: {restaurant.name}\n"
-                  f"Restaurant Country: {restaurant.country}\n"
-                  f"Restaurant Rating: {restaurant.rating_average}\n"
-                  f"Restaurant Status: {restaurant.status}\n")
-
-    @classmethod
-    def activate_restaurant(cls, code):
-        for restaurant in cls.restaurants:
-            if restaurant.code == code:
-                restaurant.alter_restaurant_status()
-                return restaurant.name, restaurant.status
-        return code
-
-    @classmethod
-    def rate_restaurant(cls, code, client, rating):
-        restaurant_found = False
-        for restaurant in cls.restaurants:
-            if restaurant.code == code:
-                restaurant_found = True
-                restaurant.receive_rating(client, rating)
-        if not restaurant_found:
-            return code
+    @property
+    def dict_builder(self):
+        return {"Code": self.code,
+                "Name": self.name,
+                "Country": self.country,
+                "Status": self.status,
+                "Rating_avg": self.rating_average}
 
     def receive_rating(self, client, rating):
         if rating > 5:
@@ -61,8 +39,11 @@ class Restaurant:
         rating = Ratings(client, rating)
         self._ratings.append(rating)
 
-    def alter_restaurant_status(self):
-        self._status = not self._status
+    def activate_restaurant(self):
+        self._status = True
+
+    def deactivate_restaurant(self):
+        self._status = False
 
 
 class Ratings:
