@@ -10,9 +10,9 @@ class RestaurantDatabase:
 
     @classmethod
     def insert_restaurant_db(cls, restaurant_dict):
-        restaurant_code = restaurant_dict["restaurant_code"]
-        restaurant_name = restaurant_dict["restaurant_name"]
-        restaurant_country = restaurant_dict["restaurant_country"]
+        restaurant_code = restaurant_dict["code"]
+        restaurant_name = restaurant_dict["name"]
+        restaurant_country = restaurant_dict["country"]
         restaurant_obj = Restaurant(restaurant_code, restaurant_name, restaurant_country)
 
         cls.restaurant_col.insert_one(restaurant_obj.dict_builder)
