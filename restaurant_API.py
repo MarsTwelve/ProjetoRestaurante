@@ -52,8 +52,7 @@ def activate_restaurant(restaurant_code: int, status: bool):
     restaurant_instance = Restaurant(restaurant_info["Code"], restaurant_info["Name"], restaurant_info["Country"])
     if status:
         restaurant_instance.activate_restaurant()
-        RestaurantDatabase.update_restaurant_db(restaurant_info["Code"], "Status", restaurant_instance.status)
-        return restaurant_instance.status
-    restaurant_instance.deactivate_restaurant()
-    RestaurantDatabase.update_restaurant_db(restaurant_info["Code"], "Status", restaurant_instance.status)
+    else:
+        restaurant_instance.deactivate_restaurant()
+    RestaurantDatabase.update_restaurant_db(restaurant_info["Code"], restaurant_instance.status)
     return restaurant_instance.status
