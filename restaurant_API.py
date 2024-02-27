@@ -56,3 +56,12 @@ def activate_restaurant(restaurant_code: int, status: bool):
         restaurant_instance.deactivate_restaurant()
     RestaurantDatabase.update_restaurant_db(restaurant_info["Code"], restaurant_instance.status)
     return restaurant_instance.status
+
+
+@app.put("/express-flavour/restaurants/restaurant/add-rating")
+def add_rating(restaurant_code: int, client: str, rating: float):
+    restaurant_info = RestaurantDatabase.find_restaurant_db(restaurant_code)
+    restaurant_instance = Restaurant(restaurant_info["Code"], restaurant_info["Name"], restaurant_info["Country"])
+    restaurant_rating = restaurant_instance.receive_rating(client, rating)
+    RestaurantDatabase.update_restaurant_ratings_db(restaurant_code, restaurant_rating)
+    return restaurant_rating
