@@ -14,7 +14,6 @@ class RestaurantDatabase:
         restaurant_name = restaurant_dict["name"]
         restaurant_country = restaurant_dict["country"]
         restaurant_obj = Restaurant(restaurant_code, restaurant_name, restaurant_country)
-
         cls.restaurant_col.insert_one(restaurant_obj.dict_builder)
 
     @classmethod
@@ -29,8 +28,22 @@ class RestaurantDatabase:
         return restaurant
 
     @classmethod
-    def update_restaurant_db(cls, restaurant_code, field_name, updated_value):
+    def update_restaurant_status_db(cls, restaurant_code, updated_value):
+        cls.restaurant_col.find_one_and_update({"Code": restaurant_code},
+                                               {"$set": {"Status": updated_value}})
+        return
+
+    @classmethod
+    def update_restaurant_ratings_db(cls, restaurant_code, updated_value):
+        rating_total = 0
         restaurant = cls.restaurant_col.find_one_and_update({"Code": restaurant_code},
-                                                            {"$set": {field_name: updated_value}},
+                                                            {"$push": {"Ratings": updated_value}},
                                                             return_document=pymongo.ReturnDocument.AFTER)
-        return restaurant
+        if restaurant is not None:
+            for rating in restaurant["Ratings"]:
+                value = rating["Rating"]
+                rating_total += value
+                rating_avg = rating_total / len(restaurant["Ratings"])
+                cls.restaurant_col.find_one_and_update({"Code": restaurant_code},
+                                                       {"$set": {"Rating_avg": rating_avg}})
+            return rating_total
