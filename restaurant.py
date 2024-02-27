@@ -5,7 +5,6 @@ class Restaurant:
         self.name = name
         self.country = country
         self._status = False
-        self._ratings = []
 
     def __str__(self):
         return f"{self.code} {self.name} {self.country} {self.status}"
@@ -13,15 +12,6 @@ class Restaurant:
     @property
     def status(self):
         return "Active" if self._status else "Inactive"
-
-    @property
-    def rating_average(self):
-        if not self._ratings:
-            return "- No Reviews Found"
-        rating_sum = sum(review.rating for review in self._ratings)
-        ratings = len(self._ratings)
-        average = round(rating_sum / ratings, 1)
-        return average
 
     @property
     def dict_builder(self):
