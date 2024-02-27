@@ -19,15 +19,17 @@ class Restaurant:
                 "Name": self.name,
                 "Country": self.country,
                 "Status": self.status,
-                "Rating_avg": self.rating_average}
+                "Rating_avg": "- No Reviews Found",
+                "Ratings": []}
 
-    def receive_rating(self, client, rating):
+    @staticmethod
+    def receive_rating(client, rating):
         if rating > 5:
             rating = 5
         if rating < 0:
             rating = 0
-        rating = Ratings(client, rating)
-        self._ratings.append(rating)
+        rating_instance = Ratings(client, rating)
+        return rating_instance.ratings_dict
 
     def activate_restaurant(self):
         self._status = True
@@ -41,3 +43,7 @@ class Ratings:
     def __init__(self, client, rating):
         self._client = client
         self.rating = rating
+
+    @property
+    def ratings_dict(self):
+        return {"Name": self._client, "Rating": self.rating}
