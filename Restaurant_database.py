@@ -45,5 +45,5 @@ class RestaurantDatabase:
                 rating_total += value
                 rating_avg = rating_total / len(restaurant["Ratings"])
                 cls.restaurant_col.find_one_and_update({"Code": restaurant_code},
-                                                       {"$set": {"Rating_avg": rating_avg}})
+                                                       {"$set": {"Rating_avg": {rating_avg}}})
             return rating_total
