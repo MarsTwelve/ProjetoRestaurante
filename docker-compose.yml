@@ -1,0 +1,12 @@
+version: "1.2"
+services:
+  restaurant_API:
+    image: restaurant_api
+    container_name: restaurant_api
+    ports:
+      - 8000:8000
+  mongodb:
+    image: mongo:7.0.5
+    container_name: restaurant_db
+    ports:
+      - 8080:27017
