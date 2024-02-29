@@ -5,10 +5,10 @@ from Restaurant_database import RestaurantDatabase
 
 
 def show_restaurants(restaurant_info):
-    return (f"Restaurant Name: {restaurant_info["Name"]} - "
-            f"Restaurant Country: {restaurant_info["Country"]} - "
-            f"Restaurant Status: {restaurant_info["Status"]} - "
-            f"Restaurant Rating Average: {restaurant_info["Rating_avg"]}")
+    return ("Restaurant Name:", restaurant_info['Name'], "-" 
+            "Restaurant Country:", restaurant_info['Country'], "-",
+            "Restaurant Status:", restaurant_info['Status'], "-",
+            "Restaurant Rating Average:", restaurant_info['Rating_avg'])
 
 
 app = FastAPI(title="Express Flavour",
